@@ -123,3 +123,9 @@ similar to habitica
 
 - inside the mono repo
 - with Svelte 5
+
+## Development
+
+### Bugs & Gimmicks
+
+Running `pnpm run dev --host` and accessing the page on phone may render properly but the buttons don't work. I am not sure why this is happening but I guess it might be because of being served over http and not https or because some parts aren't hosted properly. Anyway, exposing the regular `pnpm run dev` port via `ngrok http <port>` makes things work.
