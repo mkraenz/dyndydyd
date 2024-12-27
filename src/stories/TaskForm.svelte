@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Task } from '$lib/models/Task';
 	import type { ITask } from '$lib/types';
+	import * as m from '$lib/paraglide/messages';
 
 	type Props = {
 		addTask: (task: ITask) => void;
@@ -23,11 +24,11 @@
 
 <form {onsubmit}>
 	<label>
-		Task
+		{m.task()}
 		<input name="newTask" bind:value={name} />
 	</label>
 	<div class="button-container">
-		<button>Add</button>
+		<button>{m.add()}</button>
 	</div>
 </form>
 

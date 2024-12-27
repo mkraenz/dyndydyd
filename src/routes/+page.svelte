@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { type Filter, type ITask } from '$lib/types';
+	import AppTitle from '../stories/AppTitle.svelte';
 	import FilterButtons from '../stories/FilterButtons.svelte';
 	import TaskForm from '../stories/TaskForm.svelte';
 	import TaskList from '../stories/TaskList.svelte';
+	import * as m from '$lib/paraglide/messages';
 
 	let tasks = $state<ITask[]>([]);
 	let filter = $state<Filter>('all');
@@ -25,7 +27,7 @@
 </script>
 
 <main class="main">
-	<h1>Dyn.dyd.yd</h1>
+	<AppTitle />
 	<TaskForm {addTask} />
 	{#if tasks.length}
 		<p>
@@ -34,7 +36,7 @@
 		</p>
 		<FilterButtons setFilter={(next) => (filter = next)} currentFilter={filter} />
 	{:else}
-		<p>Add a task to get started</p>
+		<p>{m.get_started()}</p>
 	{/if}
 	<TaskList tasks={filteredTasks} {toggleDone} {removeTask} />
 </main>

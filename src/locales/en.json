@@ -1,0 +1,8 @@
+{
+	"$schema": "https://inlang.com/schema/inlang-message-format",
+	"hello_world": "Hello, {name} from en!",
+	"title": "Dyn.dyd.yd",
+	"task": "Task",
+	"add": "Add",
+	"get_started": "Add a task to get started."
+}
