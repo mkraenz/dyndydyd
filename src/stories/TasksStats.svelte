@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { getTasksContext } from '$lib/state/TasksState.svelte';
+	import * as m from '$lib/paraglide/messages';
 
 	const tasksState = getTasksContext();
-	let totalDone = $derived(tasksState.filteredTasks.filter((t) => t.done).length);
-	let hiddenTasks = $derived(tasksState.allTasks.length - tasksState.filteredTasks.length);
+	let totalDoneCount = $derived(tasksState.filteredTasks.filter((t) => t.done).length);
+	let hiddenCount = $derived(tasksState.allTasks.length - tasksState.filteredTasks.length);
 </script>
 
 <p>
-	{totalDone} / {tasksState.filteredTasks.length} Tasks completed.
-	{#if hiddenTasks}{hiddenTasks} hidden.{/if}
+	{m.task_stats({ totalDoneCount, visibleTasksCount: tasksState.filteredTasks.length })}
+	{#if hiddenCount}
+		{m.task_stats_hidden({ hiddenCount })}
+	{/if}
 </p>

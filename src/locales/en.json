@@ -8,5 +8,7 @@
 	"shift_done_tasks": "Move Done to bottom",
 	"filters_all": "All",
 	"filters_done": "Done",
-	"filters_todo": "Todo"
+	"filters_todo": "Todo",
+	"task_stats": "{totalDoneCount} / {visibleTasksCount} Tasks completed.",
+	"task_stats_hidden": "{hiddenCount} hidden."
 }

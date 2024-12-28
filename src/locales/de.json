@@ -8,5 +8,7 @@
 	"shift_done_tasks": "Erledigte Aufgaben unten",
 	"filters_all": "Alle",
 	"filters_done": "Erledigte",
-	"filters_todo": "Todo"
+	"filters_todo": "Todo",
+	"task_stats": "{totalDoneCount} von {visibleTasksCount} Aufgaben erledigt.",
+	"task_stats_hidden": "{hiddenCount} ausgeblendet."
 }
