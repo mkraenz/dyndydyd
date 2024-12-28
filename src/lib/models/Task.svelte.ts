@@ -2,8 +2,8 @@ import type { ITask } from '$lib/types';
 
 export class Task implements ITask {
 	readonly id: string;
-	name: string;
-	done: boolean;
+	name: string = $state('');
+	done: boolean = $state(false);
 
 	constructor({ name, id, done }: PickElsePartial<ITask, 'name'>) {
 		this.id = id ?? crypto.randomUUID();

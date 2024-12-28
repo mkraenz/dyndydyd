@@ -9,7 +9,7 @@
 	let tasks = $state<ITask[]>([]);
 	let filter = $state<Filter>('all');
 	const addTask = (task: ITask) => tasks.push(task);
-	const toggleDone = (task: ITask) => (task.done = !task.done);
+	const toggleDone = (task: ITask) => task.complete();
 	const removeTask = (id: string) => (tasks = tasks.filter((t) => t.id !== id));
 	let filteredTasks = $derived.by(() => {
 		switch (filter) {
