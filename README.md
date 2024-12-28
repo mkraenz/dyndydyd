@@ -24,17 +24,19 @@ pronounced: done did it
 ## Requirements-derived architecture
 
 - [x] Svelte 5
+- [ ] deployment
 - [ ] mobile-first
-- [ ] local-first
+- [x] local-first
+  - [x] local persistence
 - [ ] PWA (installable on desktop mainly. maybe notifications.)
 - [ ] Auth (via Google Signin?)
 - [ ] Localization (just because i want to)
+  - [x] setup and basics
+  - [ ] all texts localized
 - [x] pico css for starters
   - [ ] maybe top up using [shadcdn-svelte](https://next.shadcn-svelte.com/)
-- [ ] icons
 - [ ] some backend for sync (maybe hono single sls function)
 - [x] routing? (svelte kit)
-- [ ] deployment
 
 ## sv
 

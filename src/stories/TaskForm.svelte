@@ -1,14 +1,10 @@
 <script lang="ts">
-	import db from '$lib/db';
 	import { Task } from '$lib/models/Task.svelte';
-	import type { ITask } from '$lib/models/types';
 	import * as m from '$lib/paraglide/messages';
+	import { getTasksContext } from '$lib/state/TasksState.svelte';
 	import { isAlphanumeric } from '$lib/utils/is-alphanumeric';
 
-	type Props = {
-		addTask: (task: ITask) => void;
-	};
-	let { addTask }: Props = $props();
+	const tasksState = getTasksContext();
 	let name = $state('');
 	let inputRef = $state<HTMLInputElement>();
 
@@ -17,7 +13,7 @@
 		if (!name) return;
 		// learning: svelte5 doesn't really support class instances. We're making it work by renaming the file to `.svelte.ts` and using `$state()` - which unfortunately binds the model to svelte but at least its reactive now. The svelte parts are also very minimal so should be fine.
 		const newTask = Task.from({ name });
-		addTask(newTask);
+		tasksState.addTask(newTask);
 		name = '';
 
 		function avoidLosingInputFocus(e: SubmitEvent) {

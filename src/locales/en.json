@@ -4,5 +4,6 @@
 	"title": "Dyn.dyd.yd",
 	"task": "Task",
 	"add": "Add",
-	"get_started": "Add a task to get started."
+	"get_started": "Add a task to get started.",
+	"shift_done_tasks": "Move Done to bottom"
 }

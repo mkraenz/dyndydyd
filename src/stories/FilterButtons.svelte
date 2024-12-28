@@ -1,12 +1,9 @@
 <script lang="ts">
 	import type { Filter } from '$lib/models/types';
+	import { getTasksContext } from '$lib/state/TasksState.svelte';
 	import { fade } from 'svelte/transition';
 
-	type Props = {
-		setFilter: (filter: Filter) => void;
-		currentFilter: Filter;
-	};
-	let { setFilter, currentFilter }: Props = $props();
+	const tasksState = getTasksContext();
 </script>
 
 <div class="filter-container" transition:fade>
@@ -16,8 +13,10 @@
 </div>
 
 {#snippet filterButton(type: Filter)}
-	<button class="secondary" class:contrast={currentFilter === type} onclick={() => setFilter(type)}
-		>{type}</button
+	<button
+		class="secondary"
+		class:contrast={tasksState.filter === type}
+		onclick={() => (tasksState.filter = type)}>{type}</button
 	>
 {/snippet}
 

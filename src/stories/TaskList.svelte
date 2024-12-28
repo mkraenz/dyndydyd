@@ -1,32 +1,26 @@
 <script lang="ts">
-	import type { ITask } from '$lib/models/types';
-	import { fade, slide } from 'svelte/transition';
+	import { getTasksContext } from '$lib/state/TasksState.svelte';
+	import { slide } from 'svelte/transition';
 
-	type Props = {
-		tasks: ITask[];
-		toggleDone: (task: ITask) => void;
-		removeTask: (id: string) => void;
-		setTaskName: (task: ITask, name: string) => void;
-	};
-	let { tasks, toggleDone, removeTask, setTaskName }: Props = $props();
+	const tasksState = getTasksContext();
 </script>
 
 <ul>
-	{#each tasks as task (task.id)}
+	{#each tasksState.filteredTasks as task (task.id)}
 		<li transition:slide>
 			<article>
 				<div class="left-container">
-					<input type="checkbox" checked={task.done} onchange={() => toggleDone(task)} />
+					<input type="checkbox" checked={task.done} onchange={() => tasksState.toggleDone(task)} />
 					<!-- not using onchange listener but oninput because onchange does not capture del and backspace -->
 					<input
 						type="text"
 						class="textinput"
 						class:done={task.done}
 						value={task.name}
-						oninput={(e) => setTaskName(task, e.currentTarget.value)}
+						oninput={(e) => tasksState.setTaskName(task, e.currentTarget.value)}
 					/>
 				</div>
-				<button class="outline" onclick={() => removeTask(task.id)}>X</button>
+				<button class="outline" onclick={() => tasksState.removeTask(task.id)}>X</button>
 			</article>
 		</li>
 	{/each}
