@@ -30,6 +30,7 @@ pronounced: done did it
 - [ ] Auth (via Google Signin?)
 - [ ] Localization (just because i want to)
 - [x] pico css for starters
+  - [ ] maybe top up using [shadcdn-svelte](https://next.shadcn-svelte.com/)
 - [ ] icons
 - [ ] some backend for sync (maybe hono single sls function)
 - [x] routing? (svelte kit)

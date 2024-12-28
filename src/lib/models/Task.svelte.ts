@@ -1,14 +1,22 @@
-import type { ITask } from '$lib/types';
+import type { ITask, ITaskData } from '$lib/models/types';
 
 export class Task implements ITask {
 	readonly id: string;
 	name: string = $state('');
 	done: boolean = $state(false);
+	createdAt: Date;
+	updatedAt: Date;
 
-	constructor({ name, id, done }: PickElsePartial<ITask, 'name'>) {
-		this.id = id ?? crypto.randomUUID();
-		this.name = name;
-		this.done = done ?? false;
+	private constructor(params: PickElsePartial<ITaskData, 'name'>) {
+		this.id = params.id ?? crypto.randomUUID();
+		this.name = params.name;
+		this.done = params.done ?? false;
+		this.createdAt = params.createdAt ?? new Date();
+		this.updatedAt = params.updatedAt ?? new Date();
+	}
+
+	static from(params: PickElsePartial<ITaskData, 'name'>) {
+		return new Task(params);
 	}
 
 	clone() {
@@ -24,7 +32,9 @@ export class Task implements ITask {
 		return {
 			name: this.name,
 			id: this.id,
-			done: this.done
+			done: this.done,
+			createdAt: this.createdAt,
+			updatedAt: this.updatedAt
 		};
 	}
 }

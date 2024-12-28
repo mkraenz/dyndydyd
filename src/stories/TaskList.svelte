@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ITask } from '$lib/types';
+	import type { ITask } from '$lib/models/types';
 	import { fade } from 'svelte/transition';
 
 	type Props = {

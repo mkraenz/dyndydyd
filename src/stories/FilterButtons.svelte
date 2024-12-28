@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Filter } from '$lib/types';
+	import type { Filter } from '$lib/models/types';
 	import { fade } from 'svelte/transition';
 
 	type Props = {

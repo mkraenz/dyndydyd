@@ -1,16 +1,26 @@
 <script lang="ts">
-	import { type Filter, type ITask } from '$lib/types';
+	import { type Filter, type ITask } from '$lib/models/types';
 	import AppTitle from '../stories/AppTitle.svelte';
 	import FilterButtons from '../stories/FilterButtons.svelte';
 	import TaskForm from '../stories/TaskForm.svelte';
 	import TaskList from '../stories/TaskList.svelte';
 	import * as m from '$lib/paraglide/messages';
+	import db from '$lib/db';
+	import type { PageData } from './$types';
 
-	let tasks = $state<ITask[]>([]);
+	let { data }: { data: PageData } = $props();
+
+	let tasks = $state<ITask[]>(data.tasks);
 	let filter = $state<Filter>('all');
-	const addTask = (task: ITask) => tasks.push(task);
+	const addTask = async (task: ITask) => {
+		tasks.push(task);
+		await db.tasks.create(task.toJSON()); // using .toJSON since dexie doesn't like getter props which are used heavily with svelte runes. This dexie behavior seems to be inherited from indexedDb https://stackoverflow.com/a/65135601
+	};
 	const toggleDone = (task: ITask) => task.complete();
-	const removeTask = (id: string) => (tasks = tasks.filter((t) => t.id !== id));
+	const removeTask = async (id: string) => {
+		tasks = tasks.filter((t) => t.id !== id);
+		await db.tasks.remove(id);
+	};
 	let filteredTasks = $derived.by(() => {
 		switch (filter) {
 			case 'done':

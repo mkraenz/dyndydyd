@@ -11,6 +11,9 @@ dependencies:
   '@libsql/client':
     specifier: ^0.9.0
     version: 0.9.0
+  dexie:
+    specifier: ^4.0.10
+    version: 4.0.10
   drizzle-orm:
     specifier: ^0.33.0
     version: 0.33.0(@libsql/client@0.9.0)(@types/react@19.0.2)(react@18.3.1)
@@ -3143,6 +3146,10 @@ packages:
 
   /devalue@5.1.1:
     resolution: {integrity: sha512-maua5KUiapvEwiEAe+XnlZ3Rh0GD+qI1J/nb9vrJc3muPXvcF/8gXYTWF76+5DAqHyDUtOIImEuo0YKE9mshVw==}
+
+  /dexie@4.0.10:
+    resolution: {integrity: sha512-eM2RzuR3i+M046r2Q0Optl3pS31qTWf8aFuA7H9wnsHTwl8EPvroVLwvQene/6paAs39Tbk6fWZcn2aZaHkc/w==}
+    dev: false
 
   /doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}

@@ -27,7 +27,7 @@
 	<h1>{m.title()}</h1>
 	<!-- <button onclick={() => switchToLanguage('de')}>en</button>
 	<button onclick={() => switchToLanguage('en')}>de</button> -->
-	<button class="outline" onclick={nextLanguage}>{emoji[languageTag()]}</button>
+	<button class="outline secondary" onclick={nextLanguage}>{emoji[languageTag()]}</button>
 </div>
 
 <style>
