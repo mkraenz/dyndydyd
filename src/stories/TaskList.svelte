@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ITask } from '$lib/models/types';
-	import { fade } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 
 	type Props = {
 		tasks: ITask[];
@@ -13,7 +13,7 @@
 
 <ul>
 	{#each tasks as task (task.id)}
-		<li transition:fade>
+		<li transition:slide>
 			<article>
 				<div class="left-container">
 					<input type="checkbox" checked={task.done} onchange={() => toggleDone(task)} />

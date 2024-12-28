@@ -46,7 +46,12 @@ class TasksRepository {
 
 	async findAll(opts?: FindAllOptions<DbTask>) {
 		const { orderBy, limit, offset } = { ...defaultFindAllOptions, ...opts };
-		const entities = await this.#db.tasks.orderBy(orderBy).limit(limit).offset(offset).toArray();
+		const entities = await this.#db.tasks
+			.orderBy(orderBy)
+			.reverse()
+			.limit(limit)
+			.offset(offset)
+			.toArray();
 		return entities.map(Task.from);
 	}
 

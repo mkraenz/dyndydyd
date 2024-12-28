@@ -7,15 +7,18 @@
 	import * as m from '$lib/paraglide/messages';
 	import db from '$lib/db';
 	import type { PageData } from './$types';
+	import partition from 'lodash/partition';
 
 	let { data }: { data: PageData } = $props();
+	let doneAtBottom = $state(false);
 
 	let tasks = $state<ITask[]>(data.tasks);
 	let filter = $state<Filter>('all');
 	const addTask = async (task: ITask) => {
-		tasks.push(task);
+		tasks = [task, ...tasks];
 		await db.tasks.create(task.toJSON()); // using .toJSON since dexie doesn't like getter props which are used heavily with svelte runes. This dexie behavior seems to be inherited from indexedDb https://stackoverflow.com/a/65135601
 	};
+	const toggleDoneAtBottom = () => (doneAtBottom = !doneAtBottom);
 	const toggleDone = (task: ITask) => task.complete();
 	const removeTask = async (id: string) => {
 		tasks = tasks.filter((t) => t.id !== id);
@@ -25,15 +28,20 @@
 		task.name = name;
 		await db.tasks.update(task.id, { name });
 	};
+	let halfwaySortedTasks = $derived.by(() => {
+		if (!doneAtBottom) return tasks;
+		const [done, other] = partition(tasks, (t) => t.done);
+		return [...other, ...done];
+	});
 	let filteredTasks = $derived.by(() => {
 		switch (filter) {
 			case 'done':
-				return tasks.filter((t) => t.done);
+				return halfwaySortedTasks.filter((t) => t.done);
 			case 'todo':
-				return tasks.filter((t) => !t.done);
+				return halfwaySortedTasks.filter((t) => !t.done);
 			case 'all':
 			default:
-				return tasks;
+				return halfwaySortedTasks;
 		}
 	});
 	let totalDone = $derived(filteredTasks.filter((t) => t.done).length);
@@ -49,6 +57,9 @@
 			{#if hiddenTasks}{hiddenTasks} hidden.{/if}
 		</p>
 		<FilterButtons setFilter={(next) => (filter = next)} currentFilter={filter} />
+		<div class="secondaryButtonsContainer">
+			<button onclick={toggleDoneAtBottom} class="secondary">Move Done to bottom</button>
+		</div>
 	{:else}
 		<p>{m.get_started()}</p>
 	{/if}
@@ -60,5 +71,10 @@
 		margin: 0 auto;
 		max-width: 800px;
 		padding: 1rem;
+	}
+	.secondaryButtonsContainer {
+		display: flex;
+		justify-content: end;
+		margin-bottom: 0.5rem;
 	}
 </style>
