@@ -1,4 +1,5 @@
 import { Task } from '$lib/models/Task.svelte';
+import type { PartialDeep } from 'type-fest';
 import type { DbTask, MyDexie } from './types';
 
 type FindAllOptions<T extends object> = Partial<{
@@ -47,6 +48,12 @@ class TasksRepository {
 		const { orderBy, limit, offset } = { ...defaultFindAllOptions, ...opts };
 		const entities = await this.#db.tasks.orderBy(orderBy).limit(limit).offset(offset).toArray();
 		return entities.map(Task.from);
+	}
+
+	async update(taskOrId: string | DbTask, changes: PartialDeep<DbTask>) {
+		const key = typeof taskOrId === 'string' ? taskOrId : taskOrId.id;
+		await this.#db.tasks.update(key, changes);
+		return this.findOne(key);
 	}
 
 	async remove(id: string) {

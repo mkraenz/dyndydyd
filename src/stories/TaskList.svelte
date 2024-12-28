@@ -6,19 +6,27 @@
 		tasks: ITask[];
 		toggleDone: (task: ITask) => void;
 		removeTask: (id: string) => void;
+		setTaskName: (task: ITask, name: string) => void;
 	};
-	let { tasks, toggleDone, removeTask }: Props = $props();
+	let { tasks, toggleDone, removeTask, setTaskName }: Props = $props();
 </script>
 
 <ul>
 	{#each tasks as task (task.id)}
 		<li transition:fade>
 			<article>
-				<label>
+				<div class="left-container">
 					<input type="checkbox" checked={task.done} onchange={() => toggleDone(task)} />
-					<span class:done={task.done}>{task.name}</span>
-				</label>
-				<button class="outline" onclick={() => removeTask(task.id)}>Remove</button>
+					<!-- not using onchange listener but oninput because onchange does not capture del and backspace -->
+					<input
+						type="text"
+						class="textinput"
+						class:done={task.done}
+						value={task.name}
+						oninput={(e) => setTaskName(task, e.currentTarget.value)}
+					/>
+				</div>
+				<button class="outline" onclick={() => removeTask(task.id)}>X</button>
 			</article>
 		</li>
 	{/each}
@@ -36,11 +44,22 @@
 		align-items: center;
 		/* text-align: center; */
 		justify-content: space-between;
+		margin-bottom: 0;
 	}
 	li {
 		list-style-type: none;
 	}
 	.done {
 		text-decoration: line-through;
+	}
+	.left-container {
+		display: flex;
+		align-items: center;
+		margin-bottom: 0;
+	}
+	.textinput {
+		margin-bottom: 0;
+		background-color: var(--pico-card-background-color);
+		border: 0;
 	}
 </style>

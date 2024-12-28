@@ -32,6 +32,7 @@
 		"@sveltejs/adapter-netlify": "^4.4.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"@types/lodash": "^4.17.13",
 		"drizzle-kit": "^0.22.0",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
@@ -51,6 +52,8 @@
 		"@inlang/paraglide-sveltekit": "^0.15.0",
 		"@libsql/client": "^0.9.0",
 		"dexie": "^4.0.10",
-		"drizzle-orm": "^0.33.0"
+		"drizzle-orm": "^0.33.0",
+		"lodash": "^4.17.21",
+		"type-fest": "^4.31.0"
 	}
 }

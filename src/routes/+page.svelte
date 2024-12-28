@@ -21,6 +21,10 @@
 		tasks = tasks.filter((t) => t.id !== id);
 		await db.tasks.remove(id);
 	};
+	const setTaskName = async (task: ITask, name: string) => {
+		task.name = name;
+		await db.tasks.update(task.id, { name });
+	};
 	let filteredTasks = $derived.by(() => {
 		switch (filter) {
 			case 'done':
@@ -48,7 +52,7 @@
 	{:else}
 		<p>{m.get_started()}</p>
 	{/if}
-	<TaskList tasks={filteredTasks} {toggleDone} {removeTask} />
+	<TaskList tasks={filteredTasks} {toggleDone} {removeTask} {setTaskName} />
 </main>
 
 <style>
