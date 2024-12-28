@@ -5,5 +5,8 @@
 	"task": "Aufgabe",
 	"add": "Hinzufügen",
 	"get_started": "Füge eine Aufgabe hinzu, um zu beginnen.",
-	"shift_done_tasks": "Erledigte Aufgaben unten"
+	"shift_done_tasks": "Erledigte Aufgaben unten",
+	"filters_all": "Alle",
+	"filters_done": "Erledigte",
+	"filters_todo": "Todo"
 }

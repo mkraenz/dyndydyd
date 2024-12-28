@@ -2,6 +2,7 @@
 	import type { Filter } from '$lib/models/types';
 	import { getTasksContext } from '$lib/state/TasksState.svelte';
 	import { fade } from 'svelte/transition';
+	import * as m from '$lib/paraglide/messages';
 
 	const tasksState = getTasksContext();
 </script>
@@ -16,7 +17,7 @@
 	<button
 		class="secondary"
 		class:contrast={tasksState.filter === type}
-		onclick={() => (tasksState.filter = type)}>{type}</button
+		onclick={() => (tasksState.filter = type)}>{m[`filters_${type}`]()}</button
 	>
 {/snippet}
 
