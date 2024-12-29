@@ -1,6 +1,5 @@
 import type { DexieORM } from '$lib/db/dexie-orm';
 import type { Filter, ITask } from '$lib/models/types';
-import partition from 'lodash/partition';
 import { getContext, setContext } from 'svelte';
 import { SvelteMap } from 'svelte/reactivity';
 
@@ -11,23 +10,11 @@ export class TasksState {
 
 	filter = $state<Filter>('all');
 	#doneAtBottom = $state(false);
-
-	private halfwaySortedTasks = $derived.by(() => {
-		if (!this.doneAtBottom) return this.#tasks;
-		const [done, other] = partition(this.#tasks, (t) => t.done);
-		return [...other, ...done];
-	});
+	dragging = false;
 
 	#filteredTasks = $derived.by(() => {
-		switch (this.filter) {
-			case 'done':
-				return this.halfwaySortedTasks.filter((t) => t.done);
-			case 'todo':
-				return this.halfwaySortedTasks.filter((t) => !t.done);
-			case 'all':
-			default:
-				return this.halfwaySortedTasks;
-		}
+		if (!this.doneAtBottom) return this.#tasks;
+		else return this.openTasks;
 	});
 
 	get totalTasks() {
@@ -42,7 +29,20 @@ export class TasksState {
 		return this.#tasks;
 	}
 
+	get doneTasks() {
+		return this.#tasks.filter((t) => t.done);
+	}
+
+	get openTasks() {
+		return this.#tasks.filter((t) => !t.done);
+	}
+
+	get totalTasksDone() {
+		return this.doneTasks.length;
+	}
+
 	set allTasks(val: ITask[]) {
+		this.#tasks = this.dragging ? val : val.toSorted((a, b) => a.sort - b.sort);
 		this.#tasks = val;
 		this.#normalizedTasks.clear();
 		val.forEach((task) => this.#normalizedTasks.set(task.id, task));
@@ -64,7 +64,7 @@ export class TasksState {
 						? next.sort + 1000
 						: 1000;
 		movedTask.sort = sort;
-		this.allTasks = newTasks;
+		this.allTasks = this.doneAtBottom ? [...newTasks, ...this.doneTasks] : newTasks;
 		await this.#db.tasks.update(movedTask.id, { sort });
 	}
 
@@ -86,7 +86,7 @@ export class TasksState {
 	}
 
 	async addTask(task: PickedPartial<ITask, 'sort'>) {
-		const addedTask = { ...task, sort: this.first?.sort ?? 0 - 1000 };
+		const addedTask = { ...task, sort: (this.first?.sort ?? 1000) - 1000 };
 		this.#tasks = [addedTask, ...this.#tasks];
 		this.#normalizedTasks.set(task.id, addedTask);
 		await this.#db.tasks.create(addedTask);
