@@ -9,7 +9,7 @@ type FindAllOptions<T extends object> = Partial<{
 }>;
 const defaultFindAllOptions = {
 	limit: 50,
-	orderBy: 'updatedAt',
+	orderBy: 'sort',
 	offset: 0
 } satisfies FindAllOptions<DbTask>;
 
@@ -34,14 +34,19 @@ class TasksRepository {
 
 	/** Warning: IndexedDB and, by extension, dexie do not respect getter props. Hence, call `toJSON()` before  */
 	async create(data: WithPartialId<DbTask>) {
-		const id = await this.#db.tasks.add(data);
-		return Task.from({ ...data, id });
+		const lastEntry = await this.#db.tasks.orderBy('sort').reverse().first();
+		const sort = data.sort ?? (lastEntry?.sort || 0) + 1000;
+		const id = await this.#db.tasks.add({ ...data, sort });
+		// const id = await this.#db.transaction('rw', this.#db.tasks, async () => {
+		// 	return id;
+		// });
+		return Task.from({ ...data, id }).toJSON();
 	}
 
 	async findOne(id: string) {
 		const entity = await this.#db.tasks.get(id);
 		if (!entity) return null;
-		return Task.from(entity);
+		return Task.from(entity).toJSON();
 	}
 
 	async findAll(opts?: FindAllOptions<DbTask>) {
@@ -52,7 +57,7 @@ class TasksRepository {
 			.limit(limit)
 			.offset(offset)
 			.toArray();
-		return entities.map(Task.from);
+		return entities.map(Task.from).map(Task.toJSON);
 	}
 
 	async update(taskOrId: string | DbTask, changes: PartialDeep<DbTask>) {

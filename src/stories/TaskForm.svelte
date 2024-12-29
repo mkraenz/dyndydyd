@@ -12,7 +12,7 @@
 		avoidLosingInputFocus(e);
 		if (!name) return;
 		// learning: svelte5 doesn't really support class instances. We're making it work by renaming the file to `.svelte.ts` and using `$state()` - which unfortunately binds the model to svelte but at least its reactive now. The svelte parts are also very minimal so should be fine.
-		const newTask = Task.from({ name });
+		const newTask = Task.from({ name }).toJSON();
 		tasksState.addTask(newTask);
 		name = '';
 

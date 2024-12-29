@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { getTasksContext } from '$lib/state/TasksState.svelte';
 	import { slide } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 	import * as m from '$lib/paraglide/messages';
+	import { dndzone, type DndEvent } from 'svelte-dnd-action';
+	import type { ITask } from '$lib/models/types';
 
 	const tasksState = getTasksContext();
 
@@ -17,12 +20,23 @@
 		idToHoverState[id] ??= {};
 		idToHoverState[id].focus = focusing;
 	}
+	function handleDndConsider(e: CustomEvent<DndEvent<ITask>>) {
+		tasksState.allTasks = e.detail.items;
+	}
+	function handleDndFinalize(e: CustomEvent<DndEvent<ITask>>) {
+		const movedId = e.detail.info.id;
+		tasksState.moveTask(movedId, e.detail.items);
+	}
 </script>
 
-<ul>
-	{#each tasksState.filteredTasks as task (task.id)}
+<ul
+	use:dndzone={{ items: tasksState.allTasks, dropTargetStyle: {} }}
+	onconsider={handleDndConsider}
+	onfinalize={handleDndFinalize}
+>
+	{#each tasksState.allTasks as task (task.id)}
 		<li
-			transition:slide
+			animate:flip={{ duration: 200 }}
 			onmouseenter={() => setHoveringOver(task.id, true)}
 			onmouseleave={() => setHoveringOver(task.id, false)}
 			onfocusin={() => setFocusingOver(task.id, true)}

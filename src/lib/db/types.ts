@@ -7,6 +7,7 @@ interface DbTaskV1 {
 	done: boolean;
 	createdAt: Date;
 	updatedAt: Date;
+	sort?: number;
 }
 
 export type DbTask = DbTaskV1;

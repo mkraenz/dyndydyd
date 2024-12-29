@@ -4,10 +4,8 @@ export type ITaskData = {
 	done: boolean;
 	createdAt: Date;
 	updatedAt: Date;
+	sort: number;
 };
 
-export type ITask = ITaskData & {
-	complete(): void;
-	toJSON(): ITaskData;
-};
+export type ITask = ITaskData;
 export type Filter = 'all' | 'done' | 'todo';
