@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { getTasksContext } from '$lib/state/TasksState.svelte';
-	import { slide } from 'svelte/transition';
 	import { flip } from 'svelte/animate';
 	import * as m from '$lib/paraglide/messages';
 	import { dndzone, type DndEvent } from 'svelte-dnd-action';
 	import type { ITask } from '$lib/models/types';
+	import DragIndicator from 'virtual:icons/mdi/drag';
 
 	const tasksState = getTasksContext();
 
@@ -43,22 +43,26 @@
 			onfocusout={() => setFocusingOver(task.id, false)}
 		>
 			<article>
-				<div class="left-container">
-					<input
-						type="checkbox"
-						class="checkbox"
-						checked={task.done}
-						onchange={() => tasksState.toggleDone(task)}
-					/>
-					<!-- not using onchange listener but oninput because onchange does not capture del and backspace -->
-					<input
-						type="text"
-						class="textinput"
-						class:done={task.done}
-						value={task.name}
-						oninput={(e) => tasksState.setTaskName(task, e.currentTarget.value)}
-					/>
+				<div
+					class="drag-icon-container"
+					class:hidden={!idToHoverState[task.id]?.focus && !idToHoverState[task.id]?.hover}
+				>
+					<DragIndicator width="2rem" height="2rem" />
 				</div>
+				<input
+					type="checkbox"
+					class="checkbox"
+					checked={task.done}
+					onchange={() => tasksState.toggleDone(task)}
+				/>
+				<!-- not using onchange listener but oninput because onchange does not capture del and backspace -->
+				<input
+					type="text"
+					class="textinput"
+					class:done={task.done}
+					value={task.name}
+					oninput={(e) => tasksState.setTaskName(task, e.currentTarget.value)}
+				/>
 				<button
 					aria-label={m.remove_task()}
 					class="remove-button"
@@ -78,26 +82,29 @@
 		flex-direction: column;
 	}
 	article {
-		display: flex;
 		align-items: center;
-		/* text-align: center; */
-		justify-content: space-between;
+		text-align: center;
 		margin-bottom: 0;
+		padding-left: 8px;
+		padding-right: 8px;
 		padding-top: 0;
 		padding-bottom: 0;
+		display: grid;
+		grid-template-columns: min-content min-content 1fr min-content;
+		grid-template-rows: 1fr;
+		grid-column-gap: 0px;
+		grid-row-gap: 0.25rem;
 	}
 	li {
 		list-style-type: none;
 		margin-bottom: 0;
 	}
+	.drag-icon-container {
+		margin-right: 0.25rem;
+	}
 	.done {
 		text-decoration: line-through;
 		color: var(--pico-muted-color);
-	}
-	.left-container {
-		display: flex;
-		align-items: center;
-		margin-bottom: 0;
 	}
 	.textinput {
 		margin-bottom: 0;
@@ -118,7 +125,7 @@
 	}
 	.checkbox:checked {
 		background-image: var(--dimmed-icon-checkbox);
-		/* border-color: var(--pico-muted-color); */
+		border-color: var(--pico-muted-color);
 	}
 	.hidden {
 		opacity: 0; /* using opacity over display:none or visibility: hidden to ensure the element can receive focus properly*/

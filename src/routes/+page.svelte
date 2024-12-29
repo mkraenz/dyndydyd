@@ -20,8 +20,8 @@
 	<AppTitle />
 	<TaskForm />
 	{#if tasksState.allTasks.length}
-		<TasksStats />
-		<FilterButtons />
+		<!-- <TasksStats />
+		<FilterButtons /> -->
 		<MoreTasksListActions />
 	{:else}
 		<p>{m.get_started()}</p>

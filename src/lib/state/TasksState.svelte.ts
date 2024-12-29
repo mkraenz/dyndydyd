@@ -6,7 +6,7 @@ import { SvelteMap } from 'svelte/reactivity';
 
 export class TasksState {
 	#tasks = $state<ITask[]>([]);
-	#normalizedTasks = $state(new SvelteMap<string, ITask>());
+	#normalizedTasks = new SvelteMap<string, ITask>();
 	#db: DexieORM;
 
 	filter = $state<Filter>('all');
@@ -87,6 +87,7 @@ export class TasksState {
 
 	async addTask(task: PickedPartial<ITask, 'sort'>) {
 		const addedTask = { ...task, sort: this.first?.sort ?? 0 - 1000 };
+		this.#tasks = [addedTask, ...this.#tasks];
 		this.#normalizedTasks.set(task.id, addedTask);
 		await this.#db.tasks.create(addedTask);
 	}
