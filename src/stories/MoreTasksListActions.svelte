@@ -1,11 +1,12 @@
 <script lang="ts">
 	import * as m from '$lib/paraglide/messages';
 	import { getTasksContext } from '$lib/state/TasksState.svelte';
+	import { slide } from 'svelte/transition';
 
 	const tasksState = getTasksContext();
 </script>
 
-<div class="secondaryButtonsContainer">
+<div class="secondaryButtonsContainer" transition:slide>
 	<button onclick={() => tasksState.toggleDoneAtBottom()} class="secondary"
 		>{m.shift_done_tasks()}</button
 	>

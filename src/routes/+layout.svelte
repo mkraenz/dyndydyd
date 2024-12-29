@@ -2,6 +2,7 @@
 	import { i18n } from '$lib/i18n';
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
 	import type { Snippet } from 'svelte';
+	import './global.css';
 
 	type Props = {
 		children: Snippet;

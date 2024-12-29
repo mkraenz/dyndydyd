@@ -10,5 +10,6 @@
 	"filters_done": "Erledigte",
 	"filters_todo": "Todo",
 	"task_stats": "{totalDoneCount} von {visibleTasksCount} Aufgaben erledigt.",
-	"task_stats_hidden": "{hiddenCount} ausgeblendet."
+	"task_stats_hidden": "{hiddenCount} ausgeblendet.",
+	"remove_task": "Aufgabe entfernen"
 }

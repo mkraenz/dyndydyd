@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { Filter } from '$lib/models/types';
 	import { getTasksContext } from '$lib/state/TasksState.svelte';
-	import { fade } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 	import * as m from '$lib/paraglide/messages';
 
 	const tasksState = getTasksContext();
 </script>
 
-<div class="filter-container" transition:fade>
+<div class="filter-container" transition:slide>
 	{@render filterButton('all')}
 	{@render filterButton('todo')}
 	{@render filterButton('done')}
