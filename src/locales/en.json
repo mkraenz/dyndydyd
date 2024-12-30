@@ -1,16 +1,10 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from en!",
 	"title": "Dyn.dyd.yd",
 	"task": "Task",
 	"add": "Add",
 	"get_started": "Add a task to get started.",
 	"shift_done_tasks": "Move Done to bottom",
-	"filters_all": "All",
-	"filters_done": "Done",
-	"filters_todo": "Todo",
-	"task_stats": "{totalDoneCount} / {visibleTasksCount} Tasks completed.",
-	"task_stats_hidden": "{hiddenCount} hidden.",
 	"remove_task": "Remove task",
 	"completed_items": "{totalDoneCount} completed tasks"
 }
