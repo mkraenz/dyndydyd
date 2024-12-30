@@ -2,6 +2,10 @@
 
 pronounced: done did it
 
+PWA task management app written in Svelte 5/SvelteKit and IndexedDB.
+
+Check it out at [dyn.kraenz.eu](https://dyn.kraenz.eu)
+
 ## Requirements
 
 - usable on desktop and android
@@ -24,19 +28,29 @@ pronounced: done did it
 ## Requirements-derived architecture
 
 - [x] Svelte 5
-- [ ] deployment
-- [ ] mobile-first
+- [x] deployment
+- [x] mobile-first
 - [x] local-first
   - [x] local persistence
-- [ ] PWA (installable on desktop mainly. maybe notifications.)
+- [x] PWA (installable on desktop mainly. maybe notifications.)
 - [ ] Auth (via Google Signin?)
-- [ ] Localization (just because i want to)
+- [x] Localization (just because i want to)
   - [x] setup and basics
-  - [ ] all texts localized
+  - [x] all texts localized
 - [x] pico css for starters
   - [ ] maybe top up using [shadcdn-svelte](https://next.shadcn-svelte.com/)
-- [ ] some backend for sync (maybe hono single sls function)
 - [x] routing? (svelte kit)
+- [ ] some backend for sync (maybe hono single sls function)
+
+## Tech Stack
+
+- Svelte 5 + SvelteKit
+- PWA - vite-plugin-pwa
+- localization - paraglide
+- routing - sveltekit
+- local persistence - IndexedDB + Dexie
+- Styling - [Pico CSS](https://picocss.com/) + custom CSS
+- drag-and-drop - svelte-dnd-action
 
 ## sv
 
