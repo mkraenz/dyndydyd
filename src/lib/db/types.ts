@@ -1,16 +1,16 @@
 import type Dexie from 'dexie';
 import type { EntityTable } from 'dexie';
 
-interface DbTaskV1 {
+interface DbTaskV2 {
 	id: string;
 	name: string;
 	done: boolean;
 	createdAt: Date;
 	updatedAt: Date;
-	sort?: number;
+	sort: number;
 }
 
-export type DbTask = DbTaskV1;
+export type DbTask = DbTaskV2;
 
 export type MyDexie = Dexie & {
 	tasks: EntityTable<

@@ -69,4 +69,7 @@ class TasksRepository {
 	async remove(id: string) {
 		await this.#db.tasks.delete(id);
 	}
+	async updateMany(ids: string[], changes: PartialDeep<DbTask>) {
+		await this.#db.tasks.bulkUpdate(ids.map((id) => ({ key: id, changes })));
+	}
 }

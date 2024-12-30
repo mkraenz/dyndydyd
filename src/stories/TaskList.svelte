@@ -27,9 +27,9 @@
 		else tasksState.allTasks = e.detail.items;
 	}
 	function handleDndFinalize(e: CustomEvent<DndEvent<ITask>>) {
-		tasksState.dragging = false;
 		const movedId = e.detail.info.id;
 		tasksState.moveTask(movedId, e.detail.items);
+		tasksState.dragging = false;
 	}
 </script>
 
@@ -127,6 +127,9 @@
 		gap: 0.5rem;
 		display: flex;
 		flex-direction: column;
+		/* vertical padding to give some more space for drag-n-drop to snap onto. */
+		padding-top: 2rem;
+		padding-bottom: 2rem;
 	}
 	article {
 		align-items: center;

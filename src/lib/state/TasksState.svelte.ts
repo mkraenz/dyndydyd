@@ -12,17 +12,10 @@ export class TasksState {
 	#doneAtBottom = $state(false);
 	dragging = false;
 
-	#filteredTasks = $derived.by(() => {
-		if (!this.doneAtBottom) return this.#tasks;
-		else return this.openTasks;
-	});
+	filteredTasks = $derived(this.doneAtBottom ? this.openTasks : this.#tasks);
 
 	get totalTasks() {
 		return this.#tasks.length;
-	}
-
-	get filteredTasks() {
-		return this.#filteredTasks;
 	}
 
 	get allTasks() {
@@ -42,30 +35,9 @@ export class TasksState {
 	}
 
 	set allTasks(val: ITask[]) {
-		this.#tasks = this.dragging ? val : val.toSorted((a, b) => a.sort - b.sort);
-		this.#tasks = val;
+		this.#tasks = this.dragging ? val : val.toSorted(bySortScore);
 		this.#normalizedTasks.clear();
 		val.forEach((task) => this.#normalizedTasks.set(task.id, task));
-	}
-
-	async moveTask(id: string, newTasks: ITask[]) {
-		const movedTask = this.#normalizedTasks.get(id);
-		if (!movedTask) throw new Error(`Called moveTask with non-existent id: ${id}`);
-
-		const toIndex = newTasks.findIndex((t) => t.id === id);
-		const prev = this.#tasks[toIndex - 1];
-		const next = this.#tasks[toIndex + 1];
-		const sort =
-			prev && next
-				? (next.sort + prev.sort) / 2
-				: prev
-					? prev.sort - 1000
-					: next
-						? next.sort + 1000
-						: 1000;
-		movedTask.sort = sort;
-		this.allTasks = this.doneAtBottom ? [...newTasks, ...this.doneTasks] : newTasks;
-		await this.#db.tasks.update(movedTask.id, { sort });
 	}
 
 	get normalizedTasks() {
@@ -76,13 +48,13 @@ export class TasksState {
 		return this.#doneAtBottom;
 	}
 
+	get first() {
+		return this.#tasks[0];
+	}
+
 	constructor({ tasks, db }: { tasks: ITask[]; db: DexieORM }) {
 		this.allTasks = tasks;
 		this.#db = db;
-	}
-
-	get first() {
-		return this.#tasks[0];
 	}
 
 	async addTask(task: PickedPartial<ITask, 'sort'>) {
@@ -112,9 +84,44 @@ export class TasksState {
 		if (forceVal !== undefined) this.#doneAtBottom = forceVal;
 		else this.#doneAtBottom = !this.#doneAtBottom;
 	}
+
+	async moveTask(id: string, newTasks: ITask[]) {
+		const toIndex = newTasks.findIndex((t) => t.id === id);
+		const movedTask = newTasks[toIndex];
+		const next = newTasks[toIndex + 1];
+		const prev = newTasks[toIndex - 1];
+		const sort = getSortScore();
+		movedTask.sort = sort;
+		this.allTasks = this.doneAtBottom
+			? [...newTasks, ...this.doneTasks].toSorted(bySortScore)
+			: newTasks.toSorted(bySortScore);
+		await this.#db.tasks.update(movedTask.id, { sort });
+
+		function getSortScore() {
+			if (next && prev) return (prev.sort + next.sort) / 2;
+			// this means that we add at the very start of the list
+			if (next) return next.sort - 1000;
+			// this means that we add at the very end of the list
+			if (prev) return prev.sort + 1000;
+			return 1000;
+		}
+	}
+
+	uncheckAll() {
+		const doneTasks = this.doneTasks;
+		doneTasks.forEach((t) => (t.done = false));
+		this.#db.tasks.updateMany(
+			doneTasks.map((t) => t.id),
+			{ done: false }
+		);
+	}
 }
 
 const key = Symbol('tasks');
+
+function bySortScore(a: ITask, b: ITask) {
+	return a.sort - b.sort;
+}
 
 export function setTasksContext(...params: ConstructorParameters<typeof TasksState>) {
 	const state = new TasksState(...params);
