@@ -5,7 +5,7 @@
 	import * as m from '$lib/paraglide/messages';
 	import { dndzone, type DndEvent } from 'svelte-dnd-action';
 	import type { ITask } from '$lib/models/types';
-	import DragIndicator from 'virtual:icons/mdi/drag';
+	import DragIndicator from 'virtual:icons/mdi/drag-vertical';
 
 	const tasksState = getTasksContext();
 
