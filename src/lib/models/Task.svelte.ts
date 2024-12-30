@@ -1,12 +1,12 @@
 import type { ITask, ITaskData } from '$lib/models/types';
 
-export class Task implements Omit<ITask, 'sort'> {
+export class Task implements ITask {
 	readonly id: string;
 	name: string = $state('');
 	done: boolean = $state(false);
 	createdAt: Date;
 	updatedAt: Date;
-	sort?: number;
+	sort: number;
 
 	private constructor(params: PickElsePartial<ITaskData, 'name'>) {
 		this.id = params.id ?? crypto.randomUUID();
@@ -14,7 +14,7 @@ export class Task implements Omit<ITask, 'sort'> {
 		this.done = params.done ?? false;
 		this.createdAt = params.createdAt ?? new Date();
 		this.updatedAt = params.updatedAt ?? new Date();
-		this.sort = params.sort;
+		this.sort = params.sort ?? 0;
 	}
 
 	static from(params: PickElsePartial<ITaskData, 'name'>) {
@@ -41,7 +41,6 @@ export class Task implements Omit<ITask, 'sort'> {
 			done: this.done,
 			createdAt: this.createdAt,
 			updatedAt: this.updatedAt,
-			// @ts-expect-error -- TODO #1
 			sort: this.sort
 		};
 	}

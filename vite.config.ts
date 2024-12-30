@@ -1,5 +1,6 @@
 import { paraglide } from '@inlang/paraglide-sveltekit/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 import Icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vitest/config';
 
@@ -12,6 +13,28 @@ export default defineConfig({
 		}),
 		Icons({
 			compiler: 'svelte'
+		}),
+		SvelteKitPWA({
+			registerType: 'autoUpdate',
+			manifest: {
+				theme_color: '#212121',
+				background_color: '#212121',
+				icons: [
+					{
+						src: './icons/android-chrome-192x192.png',
+						sizes: '192x192',
+						type: 'image/png',
+						purpose: 'any'
+					},
+					{
+						src: '/icons/android-chrome-512x512.png',
+						sizes: '512x512',
+						type: 'image/png',
+						purpose: 'any'
+					}
+				],
+				scope: '/'
+			}
 		})
 	],
 
