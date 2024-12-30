@@ -48,7 +48,7 @@
 		>
 			<article>
 				<div
-					class="drag-icon-container"
+					class="drag-icon-container visible-on-mobile"
 					class:hidden={!idToHoverState[task.id]?.focus && !idToHoverState[task.id]?.hover}
 				>
 					<DragIndicator width="2rem" height="2rem" />
@@ -179,5 +179,10 @@
 	}
 	.hidden {
 		opacity: 0; /* using opacity over display:none or visibility: hidden to ensure the element can receive focus properly*/
+	}
+	@media (pointer: none), (pointer: coarse) {
+		.visible-on-mobile {
+			opacity: 1;
+		}
 	}
 </style>
