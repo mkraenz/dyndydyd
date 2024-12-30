@@ -17,8 +17,8 @@ export default defineConfig({
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
 			manifest: {
-				theme_color: '#212121',
-				background_color: '#212121',
+				theme_color: '#181c25',
+				background_color: '#13171f',
 				icons: [
 					{
 						src: './icons/android-chrome-192x192.png',
