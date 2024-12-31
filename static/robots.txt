@@ -1,0 +1,3 @@
+User-Agent: *
+Disallow: /_app/immutable/
+Disallow: /api/
