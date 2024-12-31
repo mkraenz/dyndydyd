@@ -34,7 +34,7 @@ class TasksRepository {
 
 	/** Warning: IndexedDB and, by extension, dexie do not respect getter props. Hence, call `toJSON()` before  */
 	async create(data: WithPartialId<DbTask>) {
-		const lastEntry = await this.#db.tasks.orderBy('sort').reverse().first();
+		const lastEntry = await this.#db.tasks.orderBy('sort').last();
 		const sort = data.sort ?? (lastEntry?.sort || 0) + 1000;
 		const id = await this.#db.tasks.add({ ...data, sort });
 		// const id = await this.#db.transaction('rw', this.#db.tasks, async () => {
