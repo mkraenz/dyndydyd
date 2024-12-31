@@ -115,6 +115,11 @@ export class TasksState {
 			{ done: false }
 		);
 	}
+
+	async loadAllTasks() {
+		const allTasks = await this.#db.tasks.findAll({ limit: Number.MAX_SAFE_INTEGER });
+		this.allTasks = allTasks;
+	}
 }
 
 const key = Symbol('tasks');

@@ -50,7 +50,7 @@
 		justify-content: end;
 	}
 	button {
-		width: 180px;
+		width: var(--min-button-width);
 	}
 	form {
 		margin-bottom: 1rem;
