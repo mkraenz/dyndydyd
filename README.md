@@ -33,6 +33,7 @@ Check it out at [dyn.kraenz.eu](https://dyn.kraenz.eu)
 - [x] local-first
   - [x] local persistence
 - [x] PWA (installable on desktop mainly. maybe notifications.)
+  - [x] [pwa with svelte](https://www.youtube.com/watch?v=_wiOcdEVgks) and [svelte docs service workers](https://svelte.dev/docs/kit/service-workers)
 - [ ] Auth (via Google Signin?)
 - [x] Localization (just because i want to)
   - [x] setup and basics

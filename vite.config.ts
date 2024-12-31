@@ -14,28 +14,28 @@ export default defineConfig({
 		Icons({
 			compiler: 'svelte'
 		}),
-		SvelteKitPWA({
-			registerType: 'autoUpdate',
-			manifest: {
-				theme_color: '#181c25',
-				background_color: '#13171f',
-				icons: [
-					{
-						src: './icons/android-chrome-192x192.png',
-						sizes: '192x192',
-						type: 'image/png',
-						purpose: 'any'
-					},
-					{
-						src: '/icons/android-chrome-512x512.png',
-						sizes: '512x512',
-						type: 'image/png',
-						purpose: 'any'
-					}
-				],
-				scope: '/'
-			}
-		})
+		// SvelteKitPWA({
+		// 	registerType: 'autoUpdate',
+		// 	manifest: {
+		// 		theme_color: '#181c25',
+		// 		background_color: '#13171f',
+		// 		icons: [
+		// 			{
+		// 				src: './icons/android-chrome-192x192.png',
+		// 				sizes: '192x192',
+		// 				type: 'image/png',
+		// 				purpose: 'any'
+		// 			},
+		// 			{
+		// 				src: '/icons/android-chrome-512x512.png',
+		// 				sizes: '512x512',
+		// 				type: 'image/png',
+		// 				purpose: 'any'
+		// 			}
+		// 		],
+		// 		scope: '/'
+		// 	}
+		// })
 	],
 
 	resolve: process.env.VITEST ? { conditions: ['browser'] } : undefined,
