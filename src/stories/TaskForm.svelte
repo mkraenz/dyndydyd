@@ -21,18 +21,16 @@
 		}
 	};
 
-	$effect(() => {
-		function listener(e: KeyboardEvent) {
-			const inputDoesNotHaveFocus = document.activeElement !== inputRef;
-			if (isAlphanumeric(e.key) && inputDoesNotHaveFocus) {
-				// e.preventDefault(); // this would prevent the key from being written to the input on first keystroke, but ever since the change to just hit any alphanumeric key to focus, it feels more natural to just type and have it accepted by the input immediately.
-				inputRef?.focus();
-			}
+	function focusInputOnAlphanumKey(e: KeyboardEvent) {
+		const inputDoesNotHaveFocus = document.activeElement !== inputRef;
+		if (isAlphanumeric(e.key) && inputDoesNotHaveFocus) {
+			// e.preventDefault(); // this would prevent the key from being written to the input on first keystroke, but ever since the change to just hit any alphanumeric key to focus, it feels more natural to just type and have it accepted by the input immediately.
+			inputRef?.focus();
 		}
-		window.addEventListener('keypress', listener);
-		return () => window.removeEventListener('keypress', listener);
-	});
+	}
 </script>
+
+<svelte:window onkeypress={focusInputOnAlphanumKey} />
 
 <form {onsubmit}>
 	<label>
