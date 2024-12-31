@@ -5,10 +5,12 @@
 	<meta charset="utf-8" />
 	<link rel="icon" href="%sveltekit.assets%/favicon.ico" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<!-- <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#212121"> -->
+
+	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#212121">
+	<!-- currently we're only ever serving dark mode, even if the user prefers light -->
+	<meta name="theme-color" media="(prefers-color-scheme: light)" content="#212121">
 	<link rel="stylesheet" href="%sveltekit.assets%/pico.jade.min.css" />
-	<meta name="description" content="Get stuff done and shout 'I dyn dyd yd'">
-	<link rel="manifest" href="./manifest.webmanifest">
+	<link rel="manifest" href="%sveltekit.assets%/manifest.webmanifest">
 	%sveltekit.head%
 </head>
 

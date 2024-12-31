@@ -14,6 +14,11 @@
 	const tasksState = getTasksContext();
 </script>
 
+<svelte:head>
+	<title>{m.home_title()}</title>
+	<meta name="description" content={m.page_head_description()} />
+</svelte:head>
+
 <main class="main">
 	<AppTitle />
 	<TaskForm />
@@ -30,5 +35,9 @@
 		margin: 0 auto;
 		max-width: 800px;
 		padding: 1rem;
+	}
+
+	@media (display-mode: browser) {
+		/* TODO #1 PWA installation invitation https://web.dev/learn/pwa/installation */
 	}
 </style>

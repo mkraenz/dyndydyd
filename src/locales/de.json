@@ -1,11 +1,14 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hallo, {name} von de!",
-	"title": "Dyn.dyd.yd",
-	"task": "Aufgabe",
 	"add": "Hinzufügen",
+	"completed_items": "{totalDoneCount} erledigte Aufgaben",
 	"get_started": "Füge eine Aufgabe hinzu, um zu beginnen.",
-	"shift_done_tasks": "Erledigte Aufgaben unten",
+	"home_title": "Dyn.dyd.yd Aufgaben",
 	"remove_task": "Aufgabe entfernen",
-	"completed_items": "{totalDoneCount} erledigte Aufgaben"
+	"page_head_description": "Erledige Zeug und rufe 'I dyn dyd yd'",
+	"service_worker_update_available": "Neues Update verfügbar. Jetzt updaten?",
+	"shift_done_tasks": "Erledigte Aufgaben unten",
+	"task": "Aufgabe",
+	"title": "Dyn.dyd.yd",
+	"html_head_content": "Neues Update verfügbar. Jetzt updaten?"
 }

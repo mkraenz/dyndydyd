@@ -4,6 +4,7 @@
 	import { onMount, type Snippet } from 'svelte';
 	import './global.css';
 	import { detectServiceWorkerUpdate } from '$lib/pwa';
+	import * as m from '$lib/paraglide/messages';
 	// import { pwaInfo } from 'virtual:pwa-info';
 
 	// let webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
@@ -15,9 +16,10 @@
 	onMount(detectServiceWorkerUpdate);
 </script>
 
-<!-- <svelte:head>
-	{@html webManifestLink}
-</svelte:head> -->
+<svelte:head>
+	<title>{m.home_title()}</title>
+	<!-- {@html webManifestLink} -->
+</svelte:head>
 
 <ParaglideJS {i18n}>
 	{@render children()}

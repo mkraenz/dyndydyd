@@ -1,11 +1,13 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"title": "Dyn.dyd.yd",
-	"task": "Task",
 	"add": "Add",
-	"get_started": "Add a task to get started.",
-	"shift_done_tasks": "Move Done to bottom",
-	"remove_task": "Remove task",
 	"completed_items": "{totalDoneCount} completed tasks",
-	"service_worker_update_available": "New update available. Update now?"
+	"get_started": "Add a task to get started.",
+	"home_title": "Dyn.dyd.yd Tasks",
+	"page_head_description": "Get stuff done and shout 'I dyn dyd yd'",
+	"remove_task": "Remove task",
+	"service_worker_update_available": "New update available. Update now?",
+	"shift_done_tasks": "Move Done to bottom",
+	"task": "Task",
+	"title": "Dyn.dyd.yd"
 }
