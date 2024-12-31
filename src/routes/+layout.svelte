@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { i18n } from '$lib/i18n';
 	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
-	import type { Snippet } from 'svelte';
+	import { onMount, type Snippet } from 'svelte';
 	import './global.css';
+	import { detectServiceWorkerUpdate } from '$lib/pwa';
 	// import { pwaInfo } from 'virtual:pwa-info';
 
 	// let webManifestLink = pwaInfo ? pwaInfo.webManifest.linkTag : '';
@@ -10,6 +11,8 @@
 		children: Snippet;
 	};
 	let { children }: Props = $props();
+
+	onMount(detectServiceWorkerUpdate);
 </script>
 
 <!-- <svelte:head>

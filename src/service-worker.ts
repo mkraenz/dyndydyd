@@ -2,33 +2,43 @@
 /// <reference no-default-lib="true"/>
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
+import { build, files, version } from '$service-worker';
 
 // following svelte docs on service workers https://svelte.dev/docs/kit/service-workers and https://www.youtube.com/watch?v=_wiOcdEVgks
 
 declare let self: ServiceWorkerGlobalScope;
 
-import { build, files, version } from '$service-worker';
-
 console.log('service worker', { version });
 const CACHE = `dyn-${version}`;
-const assets = [
-	...build, // the app itself. in dev mode, this is empty. You have to `pnpm run build && run pnpm run preview` to see how it looks like in production.
-	...files // files in static directory
-];
+const assets = getAssets();
+main();
 
-self.addEventListener('install', (event) => {
-	event.waitUntil(cacheFiles());
-});
+function main() {
+	self.addEventListener('install', (event) => {
+		event.waitUntil(cacheFiles());
+	});
 
-self.addEventListener('activate', (event) => {
-	event.waitUntil(deleteOutdatedCaches());
-});
+	self.addEventListener('activate', (event) => {
+		event.waitUntil(deleteOutdatedCaches());
+	});
 
-self.addEventListener('fetch', (event) => {
-	const shouldIntercept = event.request.method === 'GET';
-	if (!shouldIntercept) return;
-	event.respondWith(interceptedGETResponse(event));
-});
+	self.addEventListener('fetch', (event) => {
+		const shouldIntercept = event.request.method === 'GET';
+		if (!shouldIntercept) return;
+		event.respondWith(interceptedGETResponse(event));
+	});
+
+	self.addEventListener('message', async (event) => {
+		if (event.data?.type === 'SERVICE_WORKER_SKIP_WAITING') await self.skipWaiting();
+	});
+}
+
+function getAssets() {
+	return [
+		...build, // the app itself. in dev mode, this is empty. You have to `pnpm run build && run pnpm run preview` to see how it looks like in production.
+		...files // files in static directory
+	];
+}
 
 async function interceptedGETResponse(event: FetchEvent) {
 	const url = new URL(event.request.url);
