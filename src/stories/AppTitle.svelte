@@ -6,6 +6,7 @@
 	import type { AvailableLanguageTag } from '$lib/paraglide/runtime';
 	import { languageTag, availableLanguageTags } from '$lib/paraglide/runtime.js';
 	import CloudOff from 'virtual:icons/mdi/cloud-off';
+	// import CloudDone from 'virtual:icons/mdi/cloud-done';
 	import { browser } from '$app/environment';
 
 	let online = $state(false);
@@ -32,8 +33,12 @@
 <div class="container">
 	<h1>{m.title()}</h1>
 	<div class="button-container">
-		<!-- don't include icon in SSR since it will otherwise always be rendered and cause the UI to glitch on load in the client -->
-		<CloudOff width="2rem" height="2rem" display={!browser || online ? 'none' : 'block'} />
+		{#if browser && !online}
+			<!-- don't include icon in SSR since it will otherwise always be rendered and cause the UI to glitch on load in the client -->
+			<CloudOff width="2rem" height="2rem" />
+		{:else}
+			<!-- <CloudDone width="2rem" height="2rem" /> -->
+		{/if}
 		<button class="outline secondary" onclick={nextLanguage}>{emoji[languageTag()]}</button>
 	</div>
 </div>
